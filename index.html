@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лиса Гора — вечіркова гра</title>
+<meta name="description" content="Вечіркова гра на 3–15 гравців: мапа на телевізорі, гравці — з телефонів. Відьми, прокляття, дуелі й вогнище на вершині.">
+<meta property="og:title" content="Лиса Гора — вечіркова гра">
+<meta property="og:description" content="Мапа на телевізорі, гравці з телефонів. Прокляття, дуелі, Верховна Відьма ночі.">
+<meta property="og:image" content="map.jpg">
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root { --ink: #2e1c10; --gold: #e9b24a; --blood: #8e1b12; --parch: #efe0bf; --bg: #120d0b; --text: #f3e2bf; --muted: #c9b28d; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Kurale', Georgia, serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  h1, h2, h3 { font-family: 'Ruslan Display', 'Kurale', Georgia, serif; font-weight: 400; margin: 0; }
+  a { color: var(--gold); }
+  .hero { position: relative; min-height: 92vh; display: grid; place-items: center; text-align: center; padding: 40px 16px; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: url(map.jpg) center / cover; filter: brightness(.45) saturate(.9); transform: scale(1.04); }
+  .hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 20%, #120d0bee 80%), linear-gradient(transparent 60%, var(--bg)); }
+  .hero > div { position: relative; z-index: 1; max-width: 760px; }
+  .crown { width: 92px; animation: bob 3s ease-in-out infinite; filter: drop-shadow(0 0 20px #ffcf5a); }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+  .hero h1 { font-size: clamp(52px, 11vw, 112px); color: var(--gold); text-shadow: 0 0 30px #ff9a2a, 0 4px 10px #000; line-height: 1; margin: 8px 0 12px; }
+  .tag { font-size: clamp(18px, 3.4vw, 24px); margin: 0 0 28px; }
+  .dl { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; padding: 18px 36px; border-radius: 18px; background: linear-gradient(#e9b24a, #b97a22); color: #2a1709; text-decoration: none; font-size: 24px; font-weight: bold; border: 2px solid #ffd98a; box-shadow: 0 10px 30px #000a, 0 0 30px #e9b24a55; transition: transform .15s; }
+  .dl:hover { transform: translateY(-2px) scale(1.02); }
+  .dl small { font-size: 14px; font-weight: normal; opacity: .8; }
+  .other { margin-top: 14px; font-size: 16px; color: var(--muted); }
+  .facts { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+  .facts span { background: #1d130dcc; border: 1px solid #6b4a2b; border-radius: 999px; padding: 4px 14px; font-size: 15px; }
+  main { max-width: 900px; margin: 0 auto; padding: 0 16px 60px; }
+  section { margin: 48px 0; }
+  section h2 { font-size: 32px; color: var(--gold); margin-bottom: 16px; }
+  .steps { counter-reset: s; display: grid; gap: 12px; padding: 0; list-style: none; }
+  .steps li { counter-increment: s; background: #1d130d; border: 1px solid #4a3220; border-radius: 14px; padding: 14px 16px 14px 58px; position: relative; }
+  .steps li::before { content: counter(s); position: absolute; left: 14px; top: 12px; width: 32px; height: 32px; border-radius: 50%; background: var(--blood); color: #fff; display: grid; place-items: center; font-family: 'Ruslan Display', serif; }
+  .os { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .card { background: #1d130d; border: 1px solid #4a3220; border-radius: 16px; padding: 18px; }
+  .card.me { border-color: var(--gold); box-shadow: 0 0 20px #e9b24a33; }
+  .card h3 { font-size: 22px; color: var(--gold); margin-bottom: 8px; }
+  .card ol { padding-left: 20px; margin: 0; }
+  .card li { margin: 6px 0; }
+  .muted { color: var(--muted); }
+  .cast { display: flex; justify-content: center; gap: 4px; margin: 10px 0 0; }
+  .cast img { height: 110px; filter: drop-shadow(0 6px 6px #000); }
+  .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .feat div { background: #1d130d; border-left: 3px solid var(--blood); border-radius: 10px; padding: 12px 14px; }
+  .feat b { color: var(--gold); }
+  footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px 16px 50px; }
+  @media (max-width: 600px) { .dl { font-size: 20px; padding: 16px 22px; } .cast img { height: 70px; } }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <img class="crown" src="crown.webp" alt="">
+      <h1>Лиса Гора</h1>
+      <p class="tag">Відьомська ніч для компанії: мапа на телевізорі, гравці — з телефонів. Ритуали, прокляття, дуелі — і лише одна Верховна Відьма на вершині.</p>
+      <a class="dl" id="dl" href="#download">Завантажити гру<small id="dlinfo">для Mac і Windows</small></a>
+      <div class="other" id="other"></div>
+      <div class="facts"><span>3–15 гравців</span><span>~1,5–2 години</span><span>українською</span><span>без ведучого</span><span>без інтернету під час гри</span></div>
+      <div class="cast"><img src="old_witch.webp" alt=""><img src="werewolf.webp" alt=""><img src="skeleton.webp" alt=""><img src="pumpkin_necromancer.webp" alt=""><img src="birch_mavka.webp" alt=""></div>
+    </div>
+  </header>
+  <main>
+    <section id="download">
+      <h2>Завантажити</h2>
+      <div class="os">
+        <div class="card" id="card-mac">
+          <h3>🍎 Mac</h3>
+          <p><a href="https://github.com/ssatanyalomie/lysa-hora/releases/latest/download/LysaHora-Mac.zip">LysaHora-Mac.zip</a> <span class="muted">· ~170 МБ · Apple Silicon та Intel</span></p>
+          <ol>
+            <li>Відкрий завантажений архів — з'явиться папка «Лиса Гора».</li>
+            <li>Двічі клацни «Запустити гру.command».</li>
+            <li>Якщо Mac каже, що не може перевірити розробника: <b>Системні параметри → Приватність і безпека</b> → внизу «Все одно відкрити» → «Відкрити». Це один раз.</li>
+            <li>Якщо спитає про вхідні підключення — «Дозволити».</li>
+          </ol>
+        </div>
+        <div class="card" id="card-win">
+          <h3>🪟 Windows</h3>
+          <p><a href="https://github.com/ssatanyalomie/lysa-hora/releases/latest/download/LysaHora-Windows.zip">LysaHora-Windows.zip</a> <span class="muted">· ~130 МБ · Windows 10/11</span></p>
+          <ol>
+            <li>Правий клік на архіві → «Видобути все».</li>
+            <li>Двічі клацни «Запустити гру.cmd».</li>
+            <li>Якщо з'явиться «Windows захистив ваш ПК» — «Докладніше» → «Виконати все одно».</li>
+            <li>Якщо брандмауер спитає про мережу — «Дозволити» (приватні мережі).</li>
+          </ol>
+        </div>
+      </div>
+      <p class="muted">Нічого не встановлюється в систему: усе живе в цій папці. Щоб видалити гру — просто видали папку.</p>
+    </section>
+
+    <section>
+      <h2>Як грати</h2>
+      <ol class="steps">
+        <li>Запусти гру на ноутбуці — відкриється браузер з мапою. Найкраще підключити ноутбук до телевізора й увімкнути дублювання екрана.</li>
+        <li>Клацни по мапі — увімкнеться звук. <b>F</b> — повний екран.</li>
+        <li>Гості сканують QR з екрана телефоном. Телефони мають бути <b>в тому самому Wi‑Fi</b>, що й ноутбук (не «гостьова» мережа).</li>
+        <li>Кожен обирає личину й ім'я. Хто увійшов першим — <b>VIP</b>: у нього кнопка «Почати гру».</li>
+        <li>Далі гора веде сама: шість ритуалів дорогою на вершину, набіги нечисті, прокляття й обереги. У VIP є «⏸ Пауза» і «⏭ Далі».</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Що всередині</h2>
+      <div class="feat">
+        <div><b>Чужа тінь</b><br>Один не знає, де ви. Знайдіть його, поки він не здогадався.</div>
+        <div><b>Кістяне поле</b><br>Відповідь — завжди число. Хто ближче, той правий.</div>
+        <div><b>Шепіт духів</b><br>Одне слово-підказка. Однакові згорають.</div>
+        <div><b>Вуста Оракула</b><br>Одна відповідь на всі питання. Розсміши Оракула.</div>
+        <div><b>Маятник провидиці</b><br>Злови думку провидиці на шкалі.</div>
+        <div><b>Заклинання без слів</b><br>Пояснюй слова ковену — під закляттям.</div>
+        <div><b>Набіги й дуелі</b><br>Загадки, Червоний місяць, Шалений бубон — прямо на телефонах.</div>
+        <div><b>Прокляття й обереги</b><br>Кради бали, глуши голоси, відбивай дзеркалом.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Що потрібно</h2>
+      <p>Ноутбук на Mac або Windows із браузером Chrome, телефони гостей і один спільний Wi‑Fi. Інтернет потрібен лише, щоб завантажити гру.</p>
+    </section>
+  </main>
+  <footer>Лиса Гора · бета-версія · зроблено з любов'ю до Хелловіну 🔥</footer>
+<script>
+  // визначаємо систему й ставимо потрібне посилання на головну кнопку
+  const BASE = 'https://github.com/ssatanyalomie/lysa-hora/releases/latest/download/';
+  const ua = navigator.userAgent;
+  const plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+  const isMac = /Mac/i.test(plat) || /Macintosh/.test(ua);
+  const isWin = /Win/i.test(plat) || /Windows/.test(ua);
+  const isPhone = /iPhone|iPad|Android/i.test(ua);
+  const dl = document.getElementById('dl'), info = document.getElementById('dlinfo'), other = document.getElementById('other');
+  if (isPhone) {
+    info.textContent = 'запусти гру на ноутбуці — з телефона лише граєш';
+    dl.href = '#download';
+  } else if (isMac) {
+    dl.href = BASE + 'LysaHora-Mac.zip'; info.textContent = 'для Mac · ~170 МБ';
+    other.innerHTML = 'Потрібна версія для <a href="' + BASE + 'LysaHora-Windows.zip">Windows</a>?';
+    document.getElementById('card-mac').classList.add('me');
+  } else if (isWin) {
+    dl.href = BASE + 'LysaHora-Windows.zip'; info.textContent = 'для Windows · ~130 МБ';
+    other.innerHTML = 'Потрібна версія для <a href="' + BASE + 'LysaHora-Mac.zip">Mac</a>?';
+    document.getElementById('card-win').classList.add('me');
+  }
+</script>
+</body>
+</html>
